@@ -3,6 +3,7 @@ package com.api.eessefilme.dto;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.api.eessefilme.entities.Comment;
 

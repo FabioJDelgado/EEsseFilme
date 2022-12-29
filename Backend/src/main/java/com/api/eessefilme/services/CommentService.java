@@ -15,6 +15,7 @@ import com.api.eessefilme.dto.CommentDTO;
 import com.api.eessefilme.entities.Comment;
 import com.api.eessefilme.entities.User;
 import com.api.eessefilme.repositories.CommentRepository;
+import com.api.eessefilme.repositories.MovieRepository;
 import com.api.eessefilme.repositories.UserRepository;
 import com.api.eessefilme.services.exceptions.DatabaseException;
 import com.api.eessefilme.services.exceptions.ResourceNotFoundException;
@@ -30,6 +31,9 @@ public class CommentService {
 	
 	@Autowired
 	private AuthService authService;
+	
+	@Autowired
+	private MovieRepository movieRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<CommentDTO> paged(Pageable pageable){
@@ -54,6 +58,7 @@ public class CommentService {
 		Comment entity = new Comment();
 		entity.setDescription(dto.getDescription());
 		entity.setUser(authService.authenticated());
+		entity.setMovie(movieRepository.getReferenceById(dto.getMovie().getId()));
 		return new CommentDTO(repository.save(entity));
 	}
 	
